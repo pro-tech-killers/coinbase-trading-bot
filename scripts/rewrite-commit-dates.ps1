@@ -1,10 +1,13 @@
-# Writes past (~4y) author+committer dates for every commit; uses a temp data dir so the repo can be clean.
+# Rewrites all commits' author+committer dates (~4y in the past) via git filter-branch.
+# Puts map files under .git/rewrite-temp-data/ so paths work in Git Bash.
 $ErrorActionPreference = "Stop"
-$repo = Split-Path $PSScriptRoot -Parent
+$repo = (Resolve-Path (Split-Path $PSScriptRoot -Parent)).Path
+$gitDir = Join-Path $repo ".git"
+$dataDir = Join-Path $gitDir "rewrite-temp-data"
 $utf8 = [System.Text.UTF8Encoding]::new($false)
 $nl = [char]10
 
-$dataDir = Join-Path ([System.IO.Path]::GetTempPath()) ("cb-rewrite-" + [guid]::NewGuid().ToString("n"))
+if (-not (Test-Path $gitDir)) { throw "Not a git repository: $repo" }
 [void][System.IO.Directory]::CreateDirectory($dataDir)
 $orderPath = Join-Path $dataDir "commit-order.txt"
 $unixPath = Join-Path $dataDir "rewrite-unix.txt"
@@ -29,11 +32,8 @@ for ($i = 0; $i -lt $count; $i++) {
 [System.IO.File]::WriteAllText($orderPath, ($commits -join $nl) + $nl, $utf8)
 [System.IO.File]::WriteAllText($unixPath, ($unixList -join $nl) + $nl, $utf8)
 
-# Working tree must be clean for filter-branch
 $st = git status --porcelain
-if ($st) {
-  throw "Repository has local changes. Commit, stash, or reset before running: `n$st"
-}
+if ($st) { throw "Repository has local changes. Commit, stash, or reset first: `n$st" }
 
 $bash = "C:\Program Files\Git\bin\bash.exe"
 if (-not (Test-Path $bash)) { $bash = "C:\Program Files (x86)\Git\bin\bash.exe" }
@@ -42,7 +42,6 @@ if (-not (Test-Path $bash)) { throw "Install Git for Windows (bash)" }
 $q = $dataDir -replace "'", "'\''"
 $unixDataB = (& $bash -lc "cygpath -u '$q'").Trim()
 $runner = Join-Path $repo "scripts\run-rewrite-dates.sh"
-# Invoke bash with two args (paths may contain spaces)
 & $bash $runner $unixDataB
-
-Write-Host "Temp data left at: $dataDir (you can delete it)"
+Remove-Item -Recurse -Force $dataDir -ErrorAction SilentlyContinue
+Write-Host "Removed $dataDir"
