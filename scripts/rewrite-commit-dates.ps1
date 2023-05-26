@@ -39,11 +39,10 @@ $bash = "C:\Program Files\Git\bin\bash.exe"
 if (-not (Test-Path $bash)) { $bash = "C:\Program Files (x86)\Git\bin\bash.exe" }
 if (-not (Test-Path $bash)) { throw "Install Git for Windows (bash)" }
 
-$unixData = $dataDir -replace '\\', '/'
-# Git Bash: convert to /e/ style
-$unixDataB = (& $bash -lc "cygpath -u '$($dataDir -replace "'","'\\''")'").Trim()
-$runner = Join-Path $PSScriptRoot "run-rewrite-dates.sh"
-$runnerB = (& $bash -lc "cygpath -u '$($runner -replace "'","'\\''")'").Trim()
-& $bash -lc "bash ""$runnerB"" ""$unixDataB"""
+$q = $dataDir -replace "'", "'\''"
+$unixDataB = (& $bash -lc "cygpath -u '$q'").Trim()
+$runner = Join-Path $repo "scripts\run-rewrite-dates.sh"
+# Invoke bash with two args (paths may contain spaces)
+& $bash $runner $unixDataB
 
 Write-Host "Temp data left at: $dataDir (you can delete it)"
