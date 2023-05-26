@@ -12,6 +12,7 @@ EF="${REPO_ROOT}/scripts/env-filter-dates.sh"
 echo "REWRITE_DATA_DIR=$REWRITE_DATA_DIR"
 echo "Repository: $REPO_ROOT"
 export FILTER_BRANCH_SQUELCH_WARNING=1
-git filter-branch -f --env-filter "bash \"$EF\"" -- master
+# Must source (.) the script—running bash in a subshell drops GIT_* exports for the rewrite.
+git filter-branch -f --env-filter ". \"$EF\"" -- master
 echo "Sample log:"
 git log -3 --format='%h | %ad | %s' --date=iso-strict
