@@ -1,2 +1,0 @@
-﻿checkpoint: 32
-project-file: src/config.ts

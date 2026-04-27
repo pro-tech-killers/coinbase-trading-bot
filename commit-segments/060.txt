@@ -1,2 +1,0 @@
-﻿checkpoint: 60
-project-file: src/engine/botEngine.ts

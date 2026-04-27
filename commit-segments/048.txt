@@ -1,2 +1,0 @@
-﻿checkpoint: 48
-project-file: src/coinbase/createClient.ts

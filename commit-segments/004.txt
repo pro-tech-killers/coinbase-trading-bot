@@ -1,2 +1,0 @@
-﻿checkpoint: 4
-project-file: .env.example

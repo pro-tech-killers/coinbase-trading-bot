@@ -1,2 +1,0 @@
-﻿checkpoint: 24
-project-file: src/indicators/ema.ts

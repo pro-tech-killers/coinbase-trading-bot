@@ -128,9 +128,9 @@ export async function runBot(): Promise<void> {
         const sellAmt = baseAvail * 0.999;
         const baseSize = toBaseString(sellAmt, baseMin);
         if (!baseSize) {
-          logLine('skip SELL: base size below minimum', { sellAmt, baseMin });
+          logLine('skip SELL: amount size below minimum', { sellAmt, baseMin });
         } else if (cfg.PAPER_TRADING) {
-          logLine('[PAPER] would SELL market', { base_size: baseSize, product_id: cfg.PRODUCT_ID });
+          logLine('[PAPER] would SELL market', { amount_size: baseSize, product_id: cfg.PRODUCT_ID });
         } else {
           const res = await client.rest.order.placeOrder({
             client_order_id: randomUUID(),

@@ -1,2 +1,0 @@
-﻿checkpoint: 122
-project-file: .gitignore

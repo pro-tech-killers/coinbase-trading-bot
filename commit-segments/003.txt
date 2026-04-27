@@ -1,2 +1,0 @@
-﻿checkpoint: 3
-project-file: README.md

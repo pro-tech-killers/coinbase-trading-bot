@@ -1,2 +1,0 @@
-﻿checkpoint: 1
-project-file: package.json

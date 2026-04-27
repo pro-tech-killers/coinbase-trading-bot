@@ -1,2 +1,0 @@
-﻿checkpoint: 7
-project-file: src/index.ts

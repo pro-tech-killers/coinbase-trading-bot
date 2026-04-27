@@ -1,2 +1,0 @@
-﻿checkpoint: 114
-project-file: src/strategy/emaCrossTrendStrategy.ts

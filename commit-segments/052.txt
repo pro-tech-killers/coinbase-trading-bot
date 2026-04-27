@@ -1,2 +1,0 @@
-﻿checkpoint: 52
-project-file: src/utils/sizeFormat.ts

@@ -1,2 +1,0 @@
-﻿checkpoint: 6
-project-file: src/config.ts

@@ -1,2 +1,0 @@
-﻿checkpoint: 41
-project-file: tsconfig.json

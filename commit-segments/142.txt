@@ -1,2 +1,0 @@
-﻿checkpoint: 142
-project-file: src/indicators/atr.ts
