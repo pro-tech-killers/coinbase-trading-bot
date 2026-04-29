@@ -2,10 +2,9 @@
 
 **Repository (clone / issues / PRs):** [github.com/AI4FinanceFoundation/coinbase-trading-bot](https://github.com/AI4FinanceFoundation/coinbase-trading-bot)
 
-> **Run your own rules on [Coinbase Advanced Trade](https://www.coinbase.com/advanced-trade).**  
-> No paywalled “black box.” No mystery logic. A **TypeScript** bot you can read end-to-end, test in **paper mode**, and extend when *you* are ready.
+**Keywords:** coinbase coinbase-api coinbase-bot advanced-trade cdp-api trading-bot ema-crossover atr trend-filter paper-trading market-ioc typescript btc eth sol crypto algorithmic-trading automated-trading automated-crypto quant fintech risk-sizing zod nodejs open-source institutional retail spot hft retail-pro api-keys portfolio tracker usd coinbase-pro legacy-hmac cdp-keys rest-client fill-or-kill ioc market-order cloud-api developer-platform
 
-*The open-source way to run **systematic** rules on Coinbase—**without** outsourcing your API keys to a closed dashboard you cannot audit, diff, or improve.*
+**Related:** [binance-trading-bot](https://github.com/AI4FinanceFoundation/binance-trading-bot) · [bybit-trading-bot](https://github.com/AI4FinanceFoundation/bybit-trading-bot) · [ai-trading-agent](https://github.com/AI4FinanceFoundation/ai-trading-agent)
 
 **Jump to:** [At a glance](#at-a-glance) · [Your journey](#your-journey-in-four-beats) · [Who this is for](#who-this-is-for) · [Quick start](#quick-start-first-time-users) · [npm scripts & dependencies](#npm-scripts--dependencies) · [Configuration](#configuration-reference) · [Coinbase API notes](#coinbase-api-notes) · [Project layout](#project-layout) · [Go live](#enabling-live-trading-read-carefully) · [Troubleshooting](#troubleshooting) · [Related projects (same workspace)](#related-projects-same-workspace) · [Your next move](#your-next-move-invitation)
 
