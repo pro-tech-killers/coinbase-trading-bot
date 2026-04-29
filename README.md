@@ -1,10 +1,10 @@
 # Coinbase Advanced Trade — Systematic EMA Bot
 
-**Repository (clone / issues / PRs):** [github.com/AI4FinanceFoundation/coinbase-trading-bot](https://github.com/AI4FinanceFoundation/coinbase-trading-bot)
+**Repository (clone / issues / PRs):** [github.com/endless-sky-team/coinbase-trading-bot](https://github.com/endless-sky-team/coinbase-trading-bot)
 
 **Keywords:** coinbase coinbase-api coinbase-bot advanced-trade cdp-api trading-bot ema-crossover atr trend-filter paper-trading market-ioc typescript btc eth sol crypto algorithmic-trading automated-trading automated-crypto quant fintech risk-sizing zod nodejs open-source institutional retail spot hft retail-pro api-keys portfolio tracker usd coinbase-pro legacy-hmac cdp-keys rest-client fill-or-kill ioc market-order cloud-api developer-platform
 
-**Related:** [binance-trading-bot](https://github.com/AI4FinanceFoundation/binance-trading-bot) · [bybit-trading-bot](https://github.com/AI4FinanceFoundation/bybit-trading-bot) · [ai-trading-agent](https://github.com/AI4FinanceFoundation/ai-trading-agent)
+**Related:** [binance-trading-bot](https://github.com/endless-sky-team/binance-trading-bot) · [bybit-trading-bot](https://github.com/AI4FinanceFoundation/bybit-trading-bot) · [ai-trading-agent](https://github.com/endless-sky-team/ai-trading-agent)
 
 **Jump to:** [At a glance](#at-a-glance) · [Your journey](#your-journey-in-four-beats) · [Who this is for](#who-this-is-for) · [Quick start](#quick-start-first-time-users) · [npm scripts & dependencies](#npm-scripts--dependencies) · [Configuration](#configuration-reference) · [Coinbase API notes](#coinbase-api-notes) · [Project layout](#project-layout) · [Go live](#enabling-live-trading-read-carefully) · [Troubleshooting](#troubleshooting) · [Related projects (same workspace)](#related-projects-same-workspace) · [Your next move](#your-next-move-invitation)
 
@@ -14,9 +14,9 @@
 
 | Project | Venue | Focus |
 |---------|--------|--------|
-| [Binance Spot bot](https://github.com/AI4FinanceFoundation/binance-trading-bot) | Binance Spot (CCXT) | SuperTrend / EMA+RSI, long-only spot |
+| [Binance Spot bot](https://github.com/endless-sky-team/binance-trading-bot) | Binance Spot (CCXT) | SuperTrend / EMA+RSI, long-only spot |
 | [Bybit trend bot](https://github.com/AI4FinanceFoundation/bybit-trading-bot) | Bybit V5 linear USDT perps | EMA + ADX + ATR, SL/TP via trading-stop |
-| [AI trading agent](https://github.com/AI4FinanceFoundation/ai-trading-agent) | Lighter + OpenRouter | LLM tool-calling, PostgreSQL audit trail |
+| [AI trading agent](https://github.com/endless-sky-team/ai-trading-agent) | Lighter + OpenRouter | LLM tool-calling, PostgreSQL audit trail |
 
 ---
 
@@ -178,7 +178,7 @@ Main runtime dependencies:
 ### 1. Install
 
 ```bash
-git clone https://github.com/AI4FinanceFoundation/coinbase-trading-bot.git
+git clone https://github.com/endless-sky-team/coinbase-trading-bot.git
 cd "coinbase trading bot"
 npm install
 ```
