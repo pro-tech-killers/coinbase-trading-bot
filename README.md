@@ -1,11 +1,23 @@
 # Coinbase Advanced Trade — Systematic EMA Bot
 
+**Repository (clone / issues / PRs):** [github.com/AI4FinanceFoundation/coinbase-trading-bot](https://github.com/AI4FinanceFoundation/coinbase-trading-bot)
+
 > **Run your own rules on [Coinbase Advanced Trade](https://www.coinbase.com/advanced-trade).**  
 > No paywalled “black box.” No mystery logic. A **TypeScript** bot you can read end-to-end, test in **paper mode**, and extend when *you* are ready.
 
 *The open-source way to run **systematic** rules on Coinbase—**without** outsourcing your API keys to a closed dashboard you cannot audit, diff, or improve.*
 
-**Jump to:** [At a glance](#at-a-glance) · [Your journey](#your-journey-in-four-beats) · [Who this is for](#who-this-is-for) · [Quick start](#quick-start-first-time-users) · [Configuration](#configuration-reference) · [Project layout](#project-layout) · [Go live](#enabling-live-trading-read-carefully) · [Troubleshooting](#troubleshooting) · [Your next move](#your-next-move-invitation)
+**Jump to:** [At a glance](#at-a-glance) · [Your journey](#your-journey-in-four-beats) · [Who this is for](#who-this-is-for) · [Quick start](#quick-start-first-time-users) · [npm scripts & dependencies](#npm-scripts--dependencies) · [Configuration](#configuration-reference) · [Coinbase API notes](#coinbase-api-notes) · [Project layout](#project-layout) · [Go live](#enabling-live-trading-read-carefully) · [Troubleshooting](#troubleshooting) · [Related projects (same workspace)](#related-projects-same-workspace) · [Your next move](#your-next-move-invitation)
+
+---
+
+## Related projects (same workspace)
+
+| Project | Venue | Focus |
+|---------|--------|--------|
+| [Binance Spot bot](https://github.com/AI4FinanceFoundation/binance-trading-bot) | Binance Spot (CCXT) | SuperTrend / EMA+RSI, long-only spot |
+| [Bybit trend bot](https://github.com/AI4FinanceFoundation/bybit-trading-bot) | Bybit V5 linear USDT perps | EMA + ADX + ATR, SL/TP via trading-stop |
+| [AI trading agent](https://github.com/AI4FinanceFoundation/ai-trading-agent) | Lighter + OpenRouter | LLM tool-calling, PostgreSQL audit trail |
 
 ---
 
@@ -131,12 +143,43 @@ flowchart LR
 
 ---
 
+## npm scripts & dependencies
+
+From `package.json` (**package:** `coinbase-adv-trade-bot`):
+
+| Script | Command | Purpose |
+|--------|---------|---------|
+| `npm run dev` | `node --import tsx src/index.ts` | Run TypeScript without a separate compile step. |
+| `npm run build` | `tsc` | Emit JavaScript to `dist/` (`npm start` expects `dist/index.js`). |
+| `npm start` | `node dist/index.js` | Production-style run **after** `npm run build`. |
+| `npm run typecheck` | `tsc --noEmit` | CI / local compile validation only. |
+
+Main runtime dependencies:
+
+| Dependency | Role |
+|------------|------|
+| [coinbase-advanced-node](https://www.npmjs.com/package/coinbase-advanced-node) | Typed client for Coinbase Advanced Trade REST endpoints. |
+| [zod](https://zod.dev/) | Validates `.env` once at startup. |
+| [dotenv](https://www.npmjs.com/package/dotenv) | Loads `.env` locally. |
+
+---
+
+## Coinbase API notes
+
+- **Products:** `PRODUCT_ID` must be a live Advanced Trade **product ID** (e.g. `BTC-USD`). The bot validates format at startup—typos fail fast rather than silently polling the wrong instrument.
+- **Candles:** The loop requests historical candles until the strategy has enough bars for `EMA_TREND` **and** the crossover logic; coarse granularities (`ONE_DAY`) mean slower “strategy-ready” startup than `ONE_MINUTE`/`FIVE_MINUTE`.
+- **Orders:** Entries use **market IOC** with **`quote_size`**; sizing merges **`RISK_PER_TRADE`** with optional **`MAX_QUOTE_PER_ORDER`**. Coinbase minimum increments (`quote_min_size`, `base_min_size`) still apply—the README troubleshooting lists rejects tied to minima.
+- **Rate limits:** Advanced Trade applies REST rate limits per key and endpoint class. For a single pair and **one poll every `POLL_MS`**, traffic is modest; if you shorten `POLL_MS` aggressively or run many forks of this bot on the **same** key, watch for `429`-style throttling in logs and back off.
+- **Not modeled here:** Full order book, historical fill reconstruction, or sub-account routing—extend the client layer if you need them.
+
+---
+
 ## Quick start (first-time users)
 
 ### 1. Install
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/AI4FinanceFoundation/coinbase-trading-bot.git
 cd "coinbase trading bot"
 npm install
 ```
@@ -271,6 +314,8 @@ This README is written so you can align expectations with that workflow—not wi
 | `Unknown product` | `PRODUCT_ID` must match a live Advanced Trade product (e.g. `BTC-USD`). |
 | Orders rejected / below minimum | Check Coinbase `base_min_size` / `quote_min_size` for that product; increase balance or `RISK_PER_TRADE` slightly if appropriate. |
 | “Need N candles” | The strategy needs a minimum history; wait for the feed to return enough bars or use a coarser `CANDLE_GRANULARITY` if the API limit is an issue. |
+| Too many requests / throttling | Short `POLL_MS` or multiple processes on one key | Increase `POLL_MS`; separate keys or stagger runs; see [Coinbase API notes](#coinbase-api-notes). |
+| `401` / auth after key rotation | Stale env or wrong key pair | Full process restart; ensure CDP keys are not mixed with legacy `API_KEY`/`API_SECRET` unless that is what you use. |
 
 ---
 
