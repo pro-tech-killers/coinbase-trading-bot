@@ -2,6 +2,14 @@
   "name": "coinbase-adv-trade-bot",
   "version": "1.0.0",
   "description": "Coinbase Advanced Trade bot — EMA trend strategy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pro-tech-killers/coinbase-trading-bot.git"
+  },
+  "homepage": "https://github.com/pro-tech-killers/coinbase-trading-bot#readme",
+  "bugs": {
+    "url": "https://github.com/pro-tech-killers/coinbase-trading-bot/issues"
+  },
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
